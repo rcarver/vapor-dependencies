@@ -1,7 +1,8 @@
 import XCTest
-@testable import vapor_dependencies
 
-final class vapor_dependenciesTests: XCTestCase {
+@testable import VaporDependencies
+
+final class Tests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

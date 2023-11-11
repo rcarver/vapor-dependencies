@@ -5,19 +5,32 @@ import PackageDescription
 
 let package = Package(
     name: "vapor-dependencies",
+    platforms: [
+        .macOS(.v10_15),
+        .iOS(.v13),
+        .tvOS(.v13),
+        .watchOS(.v6)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "vapor-dependencies",
-            targets: ["vapor-dependencies"]),
+        .library(name: "VaporDependencies", targets: ["VaporDependencies"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.0.0"),
+        .package(url: "https://github.com/vapor/fluent.git", from: "4.8.0"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.83.1"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "vapor-dependencies"),
+            name: "VaporDependencies",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Fluent", package: "fluent"),
+                .product(name: "Vapor", package: "vapor"),
+            ]
+        ),
         .testTarget(
-            name: "vapor-dependenciesTests",
-            dependencies: ["vapor-dependencies"]),
+            name: "VaporDependenciesTests",
+            dependencies: ["VaporDependencies"]
+        ),
     ]
 )
