@@ -13,6 +13,7 @@ public final class VaporDependencies {
     final class Storage {
         var appDeps: [(inout DependencyValues, Application) -> Void] = []
         var reqDeps: [(inout DependencyValues, Request) -> Void] = []
+        var reqAppDeps: [(inout DependencyValues, Application) -> Void] = []
         var dbDeps:  [(inout DependencyValues, Database) -> Void] = []
     }
 
@@ -59,7 +60,7 @@ struct VaporDependenciesContinuationStorageKey: StorageKey {
 }
 
 extension Storage {
-    var dependenciesContinuation: DependencyValues.Continuation? {
+    public var dependenciesContinuation: DependencyValues.Continuation? {
         get { self[VaporDependenciesContinuationStorageKey.self] }
         set { self[VaporDependenciesContinuationStorageKey.self] = newValue }
     }
