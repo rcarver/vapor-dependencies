@@ -4,36 +4,6 @@ Use [Dependencies](https://github.com/pointfreeco/swift-dependencies) with [Vapo
 
 Status: Experimental / In Progress
 
-### Setup
-
-```swift
-// Configure custom dependencies to use
-app.dependencies.use(\.analyzer)
-app.dependencies.use(\.search)
-app.dependencies.use(\.topicsClient)
-
-// Wrap requests in middleware
-app.middleware.use(WithDependenciesMiddleware())
-```
-
-### Request
-
-```swift
-// Gain access to configured dependencies during a request.
-try await request.yieldDependencies {
-  // do work, all dependencies are here!
-}
-```
-
-### Application
-
-```swift
-// Use outside of request context, for example with Commands.
-try await application.withDependencies {
-  // do work, all dependencies are here!
-}
-```
-
 ### Define Dependencies
 
 You can define a dependency to require the `Application`, `Request` or `Database` to be created.
@@ -47,6 +17,36 @@ extension SearchDependency: RequestDependencyKey {
 }
 extension TopicsClient: DatabaseDependencyKey {
   public static func live(db: Database) -> Self { ... }
+}
+```
+
+### Configure
+
+```swift
+// Configure custom dependencies to use
+app.dependencies.use(\.analyzer)
+app.dependencies.use(\.search)
+app.dependencies.use(\.topicsClient)
+
+// Wrap requests in middleware
+app.middleware.use(WithDependenciesMiddleware())
+```
+
+### Use in a Request
+
+```swift
+// Gain access to configured dependencies during a request.
+try await request.yieldDependencies {
+  // do work, all dependencies are here!
+}
+```
+
+### Use in an Application
+
+```swift
+// Use outside of request context, for example with Commands.
+try await application.withDependencies {
+  // do work, all dependencies are here!
 }
 ```
 
