@@ -28,6 +28,7 @@ extension VaporDependencies {
     /// Use a dependency that can be created using the ``Application``.
     public func use<T>(_ keyPath: WritableKeyPath<DependencyValues, T>) where T: ApplicationDependencyKey {
         self.storage.appDeps.append({ $0[keyPath: keyPath] = .live(app: $1) })
+        self.storage.reqAppDeps.append({ $0[keyPath: keyPath] = .live(app: $1) })
     }
 
     /// Use a dependency that can be created using the current ``Request``.
